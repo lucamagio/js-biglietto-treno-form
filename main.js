@@ -1,21 +1,34 @@
-const prezzoKm = 0.21;
-let prezzo = kilometri * prezzoKm;
+const inputKm = document.querySelector('#inputKm');
+const inputEta = document.querySelector('#inputEta');
+const submitButton = document.querySelector('#submitButton')
+const outputResult = document.querySelector('#result')
 
-if(isNaN(kilometri)){
+submitButton.addEventListener('click', function(event) {
+    event.preventDefault()
 
-    console.log('inserisci un numero valido');
-    
-} else{
+    let km = inputKm.value;
+    let eta = inputEta.value;
+    const prezzoKm = 0.21;
+    let prezzoNormale = parseFloat(km * prezzoKm);
+    let prezzoUnder = parseFloat(km * prezzoKm * 0.8);
+    let prezzoOver = parseFloat(km * prezzoKm * 0.6);
+    let result = 0;
 
-    if(isNaN(eta) || eta < 0){
-        console.log('inserisci una eta valida');
+    if(isNaN(km) || km <= 0 || isNaN(eta) || eta < 0){
+
+        result = 'inserisci un numero valido su chilometri, su eta o su entrambi';
+        
     } else{
-        if(eta >= 0 && eta < 18){
-            console.log(`Il prezzo del biglietto è: €${(prezzo*0.8).toFixed(2)}`);
-        } else if (eta >= 18 && eta < 65){
-            console.log(`Il prezzo del biglietto è: €${prezzo.toFixed(2)}`);
-        } else{
-            console.log(`Il prezzo del biglietto è: €${(prezzo*0.6).toFixed(2)}`);
+
+            if(eta >= 0 && eta < 18){
+                result = `Il prezzo del biglietto è: €${prezzoUnder.toFixed(2)}`;
+            } else if (eta >= 18 && eta < 65){
+                result = `Il prezzo del biglietto è: €${prezzoNormale.toFixed(2)}`;
+            } else{
+                result = `Il prezzo del biglietto è: €${prezzoOver.toFixed(2)}`;
+            }
         }
+
+    outputResult.innerHTML = result;
     }
-}
+)
